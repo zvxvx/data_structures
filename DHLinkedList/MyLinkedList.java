@@ -58,22 +58,10 @@ public class MyLinkedList {
     // Note: you have to handle the case where a list node stores null data element.
     public boolean contains(Object o) {
         ListNode cur = this.head.next;
-        if (o == null) {
-            while (cur != null) {
-                if (cur.data == null) {
-                    return true;
-                }
-                cur = cur.next;
-            }
-        } else {
-            while (cur != null) {
-                if (cur.data.equals(o)) {
-                    return true;
-                }
-                cur = cur.next;
-            }
+        while (cur != null && !Objects.equals(cur.data, o)) {
+            cur = cur.next;
         }
-        return false; //change this as you need.
+        return cur != null;
     }
 
     // Removes the first occurrence of the specified element o from this list and returns true, if it is present.
@@ -140,19 +128,28 @@ public class MyLinkedList {
         boolean listA = true;
         ListNode currA = A.head.next;
         ListNode currB = B.head.next;
-        while (listA && currA != null) {
-            if (C.add(currA.data)) {
-                currA = currA.next;
+        while (currA != null || currB != null) {
+            while (listA) {
+                if (currA == null) {
+                    listA = false;
+                    break;
+                }
+                if (C.add(currA.data)) {
+                    currA = currA.next;
+                    listA = false;
+                }
             }
-            listA = false;
-        }
-        while (!listA && currB != null) {
-            if (C.add(currB.data)) {
-                currB = currB.next;
+            while (!listA) {
+                if (currB == null) {
+                    listA = true;
+                    break;
+                }
+                if (C.add(currB.data)) {
+                    currB = currB.next;
+                    listA = true;
+                }
             }
-            listA = true;
         }
-
         return C;
     }
 

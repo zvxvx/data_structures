@@ -136,8 +136,11 @@ public class MyLinkedList {
     //       C will be {1, 2, 3, 4, 5, 6, 8, 10}.
     // Note: after this method is called, both list A and B are UNCHANGED.
     public static MyLinkedList interleave(MyLinkedList A, MyLinkedList B) {
-
-        return null; //change this as you need.
+        // We can try using a boolean value to switch between lists. if true,
+        // add from A, if false add from B. I suspect when one list runs out,
+        // the boolean value will flip back to one of the lists and stay that
+        // way until C has all values added in correct order.
+        return null;
     }
 
     // E.g, if this list is [dummy]->["A"]->["B"]->["C"] with size = 3.

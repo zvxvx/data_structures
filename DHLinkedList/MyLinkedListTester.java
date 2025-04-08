@@ -143,7 +143,7 @@ public class MyLinkedListTester {
         System.out.println(list2.toString());
         System.out.println(list0);
         list0.remove(null);
-//        System.out.println(list0);
+        System.out.println(list0);
         list0.remove(null);
         System.out.println(list0);
         list3.remove("notexist");
@@ -212,14 +212,14 @@ public class MyLinkedListTester {
         // the method you are currently debugging.
         // When submitting your code, please uncomment all methods below.
 
-//        testAddLast(); //
-//        testRemoveFirst(); //
-//        testContains(); //
-//        testRemoveObject();//
-//        testRemoveAllCopies();//
+        testAddLast(); //
+        testRemoveFirst(); //
+        testContains(); //
+        testRemoveObject();//
+        testRemoveAllCopies();//
         testInterleave(); //
-//        testAddIndex(); //
-//        testRemoveIndex(); //
-//        testGetIndex(); //
+        testAddIndex(); //
+        testRemoveIndex(); //
+        testGetIndex(); //
     }//end of main
 }

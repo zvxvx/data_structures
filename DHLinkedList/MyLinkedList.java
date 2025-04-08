@@ -36,8 +36,8 @@ public class MyLinkedList {
     //       in this list, then returns the data in the node removed.
     // If the size of this list is zero, throws an Exception.
     public Object removeFirst() throws Exception {
-        if (size == 0) {
-            throw new Exception();
+        if (isEmpty()) {
+            throw new Exception("LinkedList is empty!");
         }
         Object temp;
         temp = this.head.next.data;
@@ -155,7 +155,7 @@ public class MyLinkedList {
     //   change the existing list to [dummy]->["D"]->["E"]->["A"]->["B"]->["C"].
     public void add(int index, Object o) {
         if (index < 0 || index > this.size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index passed is not valid!");
         }
         ListNode newNode = new ListNode(o);
         ListNode cur = this.head.next;
@@ -181,7 +181,8 @@ public class MyLinkedList {
     // if index < 0 or index >= this.size, throws IndexOutOfBoundsException.
     public Object get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Provided index is out of " +
+                    "bounds! " + index);
         }
         ListNode cur = this.head.next;
         for (int i = 0; i < index; i++) {
@@ -197,7 +198,8 @@ public class MyLinkedList {
     // if index < 0 or index >= this.size, throws IndexOutOfBoundsException.
     public Object remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Provided index is out of " +
+                    "bounds! " + index);
         }
         ListNode prev = this.head;
         ListNode cur = this.head.next;

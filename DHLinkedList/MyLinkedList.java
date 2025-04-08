@@ -40,16 +40,10 @@ public class MyLinkedList {
             throw new Exception();
         }
         Object temp;
-        if (size == 1) {
-            temp = this.head.next.data;
-            this.head.next = null;
-            this.size--;
-            return temp;
-        }
         temp = this.head.next.data;
         this.head.next = this.head.next.next;
         this.size--;
-        return temp; //change this as you need.
+        return temp;
     }
 
     // Returns true if this list contains the specified element o.
@@ -70,6 +64,8 @@ public class MyLinkedList {
     //     (o==null ? get(i)==null : o.equals(get(i))) (if such an element exists).
     // Note: you have to handle the case where a list node stores null data element.
     public boolean remove(Object o) {
+        // the following eliminates the need for using get(i)==null or o.equals
+        // (get(i))
         for (ListNode prev = this.head, cur = this.head.next;
              cur != null;
              prev = cur, cur = cur.next) {
@@ -168,15 +164,12 @@ public class MyLinkedList {
             newNode.next = this.head.next;
             this.head.next = newNode;
         } else {
-            for (int i = 0; i <= index; i++) {
-                if (i == index) {
-                    prev.next = newNode;
-                    newNode.next = cur;
-                } else {
-                    prev = cur;
-                    cur = cur.next;
-                }
+            for (int i = 0; i < index; i++) {
+                prev = cur;
+                cur = cur.next;
             }
+            prev.next = newNode;
+            newNode.next = cur;
         }
         this.size++;
     }
@@ -222,7 +215,7 @@ public class MyLinkedList {
     // it returns true, after e is successfully added.
     public boolean add(Object e) {
         ListNode newNode = new ListNode(e);
-        if (this.size == 0) {
+        if (isEmpty()) {
             this.head.next = newNode;
         } else {
             ListNode cur = this.head.next;

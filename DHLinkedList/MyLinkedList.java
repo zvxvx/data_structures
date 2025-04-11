@@ -1,4 +1,5 @@
 import javax.management.ListenerNotFoundException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -36,14 +37,11 @@ public class MyLinkedList {
     //       in this list, then returns the data in the node removed.
     // If the size of this list is zero, throws an Exception.
     public Object removeFirst() throws Exception {
-        if (isEmpty()) {
-            throw new Exception("LinkedList is empty!");
-        }
-        Object temp;
-        temp = this.head.next.data;
+        if (isEmpty()) throw new Exception();
+        Object data = this.head.next.data;
         this.head.next = this.head.next.next;
         this.size--;
-        return temp;
+        return data;
     }
 
     // Returns true if this list contains the specified element o.
@@ -64,18 +62,15 @@ public class MyLinkedList {
     //     (o==null ? get(i)==null : o.equals(get(i))) (if such an element exists).
     // Note: you have to handle the case where a list node stores null data element.
     public boolean remove(Object o) {
-        // the following eliminates the need for using get(i)==null or o.equals
-        // (get(i))
         for (ListNode prev = this.head, cur = this.head.next;
-             cur != null;
-             prev = cur, cur = cur.next) {
+             cur != null; prev = cur, cur = cur.next) {
             if (Objects.equals(cur.data, o)) {
                 prev.next = cur.next;
                 this.size--;
                 return true;
             }
         }
-        return false; //change this as you need.
+        return false;
     }
 
     // Removes all copies of o from this linked list.
@@ -89,20 +84,11 @@ public class MyLinkedList {
     //        Be careful when removing all "A"s in this example.
     // Note: This list may contains zero, one or multiple copies of null data elements.
     public boolean removeAllCopies(Object o) { //passed test
-        ListNode cur = this.head.next, prev = this.head;
         boolean removed = false;
-        while (cur != null) {
-            if (Objects.equals(cur.data, o)) {
-                prev.next = cur.next;
-                this.size--;
-                removed = true;
-                cur = cur.next;
-            } else {
-                prev = cur;
-                cur = cur.next;
-            }
+        while (remove(o)) {
+            removed = true;
         }
-        return removed; //change this as you need.
+        return removed;
     }
 
     // Insert data elements from linkedlist A and B alternately into
@@ -120,32 +106,31 @@ public class MyLinkedList {
     //       C will be {1, 2, 3, 4, 5, 6, 8, 10}.
     // Note: after this method is called, both list A and B are UNCHANGED.
     public static MyLinkedList interleave(MyLinkedList A, MyLinkedList B) {
-        MyLinkedList C = new MyLinkedList();
         boolean listA = true;
-        ListNode currA = A.head.next;
-        ListNode currB = B.head.next;
-        while (currA != null || currB != null) {
-            while (listA) {
-                if (currA == null) {
+        MyLinkedList C = new MyLinkedList();
+        ListNode aCur = A.head.next, bCur = B.head.next;
+        while (aCur != null || bCur != null) {
+            if (listA) {
+                if (aCur == null) {
                     listA = false;
-                    break;
+                } else {
+                    if (C.add(aCur.data)) {
+                        aCur = aCur.next;
+                        listA = false;
+                    }
                 }
-                if (C.add(currA.data)) {
-                    currA = currA.next;
-                    listA = false;
-                }
-            }
-            while (!listA) {
-                if (currB == null) {
+            } else {
+                if (bCur == null) {
                     listA = true;
-                    break;
-                }
-                if (C.add(currB.data)) {
-                    currB = currB.next;
-                    listA = true;
+                } else {
+                    if (C.add(bCur.data)) {
+                        bCur = bCur.next;
+                        listA = true;
+                    }
                 }
             }
         }
+
         return C;
     }
 
@@ -155,22 +140,16 @@ public class MyLinkedList {
     //   change the existing list to [dummy]->["D"]->["E"]->["A"]->["B"]->["C"].
     public void add(int index, Object o) {
         if (index < 0 || index > this.size) {
-            throw new IndexOutOfBoundsException("Index passed is not valid!");
+            throw new IllegalArgumentException();
+        }
+        ListNode prev = this.head, cur = this.head.next;
+        for (int i = 0; i < index; i++) {
+            prev = cur;
+            cur = cur.next;
         }
         ListNode newNode = new ListNode(o);
-        ListNode cur = this.head.next;
-        ListNode prev = this.head;
-        if (index == 0) {
-            newNode.next = this.head.next;
-            this.head.next = newNode;
-        } else {
-            for (int i = 0; i < index; i++) {
-                prev = cur;
-                cur = cur.next;
-            }
-            prev.next = newNode;
-            newNode.next = cur;
-        }
+        prev.next = newNode;
+        newNode.next = cur;
         this.size++;
     }
 
@@ -181,8 +160,7 @@ public class MyLinkedList {
     // if index < 0 or index >= this.size, throws IndexOutOfBoundsException.
     public Object get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException("Provided index is out of " +
-                    "bounds! " + index);
+            throw new IndexOutOfBoundsException();
         }
         ListNode cur = this.head.next;
         for (int i = 0; i < index; i++) {
@@ -198,11 +176,9 @@ public class MyLinkedList {
     // if index < 0 or index >= this.size, throws IndexOutOfBoundsException.
     public Object remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException("Provided index is out of " +
-                    "bounds! " + index);
+            throw new IndexOutOfBoundsException();
         }
-        ListNode prev = this.head;
-        ListNode cur = this.head.next;
+        ListNode prev = this.head, cur = this.head.next;
         for (int i = 0; i < index; i++) {
             prev = cur;
             cur = cur.next;
@@ -210,7 +186,7 @@ public class MyLinkedList {
         Object data = cur.data;
         prev.next = cur.next;
         this.size--;
-        return data; //change this as you need.
+        return data;
     }
 
     //Add the object e to the end of this list.
@@ -227,7 +203,7 @@ public class MyLinkedList {
             cur.next = newNode;
         }
         this.size++;
-        return true; //change this as you need.
+        return true;
     }
 
     //Please DO NOT Change the following toString() method!!!

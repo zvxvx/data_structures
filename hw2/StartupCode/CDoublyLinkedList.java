@@ -1,5 +1,6 @@
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class CDoublyLinkedList {
 
 	private class Node {
@@ -62,8 +63,19 @@ public class CDoublyLinkedList {
         // the method call returns a list that contains data in A that is smaller than 10, the passed-in argument.
         // That is, the returned list contains { 9, 6, 4, 7}.
 	public CDoublyLinkedList subListOfSmallerValues(Comparable data) {
-	
-		return null; //change this as needed.
+		CDoublyLinkedList ll = new CDoublyLinkedList();
+		Node cur = this.head.next;
+		while (cur != this.head) {
+			if (cur.data == null) {
+				continue;
+			}
+			if (((Comparable) cur.data).compareTo(data) < 0) {
+				ll.addLast(cur.data);
+				ll.size++;
+			}
+			cur = cur.next;
+			}
+		return ll; //change this as needed.
 	}
 	
 	// This method should remove the first occurrence of the data from the list, 
@@ -93,7 +105,6 @@ public class CDoublyLinkedList {
 	// Note: a list node may store a null data element. Please handle this edge case.
 	public int lastIndexOf(Object o) {
 		Node cur = this.head.prev;
-
 		for (int lastNodeIdx = this.size - 1; lastNodeIdx >= 0; lastNodeIdx--) {
 			if (o == null && cur.data == null) {
 				return lastNodeIdx;
@@ -103,7 +114,6 @@ public class CDoublyLinkedList {
 			}
 			cur = cur.prev;
 		}
-
 		return -1; //change this as needed.
 	}
 	
@@ -115,18 +125,34 @@ public class CDoublyLinkedList {
 	// If other list is null, throws NullPointerException.
         // Helper methods are allowed.
 	public boolean retainAll(CDoublyLinkedList other) throws NullPointerException {
-
-
-	    return false; //change this as needed.
+		if (other == null) {
+			throw new NullPointerException();
+		}
+		boolean removed = false;
+	    return removed;
 	}
 	
 
-        // Write this method to sort this list using insertion sort algorithm, 
-        //      as we have learned in the classroom.
+	// Write this method to sort this list using insertion sort algorithm,
+	// as we have learned in the classroom.
 	public void insertionSort() {
-		
-	}
-	
+		if(this.size <= 1)
+			return;
+		Node smallest, cur, start;
+		Comparable temp;
+		for(start = this.head.next; start.next != this.head; start =
+				start.next) {
+			smallest = start;
+			for(cur = start.next; cur != this.head; cur = cur.next){
+				if( ((Comparable)cur.data).compareTo(smallest.data) < 0)
+					smallest = cur;
+			}
+			temp = (Comparable)start.data;
+			start.data = smallest.data;
+			smallest.data = temp;
+		}//end of outer loop
+	}//end of method
+
 	@Override
 	public String toString() {
 		String result = "{";

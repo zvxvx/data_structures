@@ -141,12 +141,12 @@ public class Tester {
 	
 	public static void main(String argv[]) {
 
-//		testAddLast();
-//		testSubList();
+		testAddLast();
+		testSubList();
 		testLastIndexOf();
 //		testRetainAll();
-//		testRemoveStartingAtBack();
-//		testSort();
+		testRemoveStartingAtBack();
+		testSort();
 		
 	}//end of main
 }

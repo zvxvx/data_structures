@@ -217,7 +217,7 @@ public class MyLinkedListTester {
 //        testContains(); //
 //        testRemoveObject();//
 //        testRemoveAllCopies();//
-        testInterleave(); //
+//        testInterleave(); //
 //        testAddIndex(); //
 //        testRemoveIndex(); //
 //        testGetIndex(); //

@@ -144,7 +144,7 @@ public class Tester {
 		testAddLast();
 		testSubList();
 		testLastIndexOf();
-//		testRetainAll();
+		testRetainAll();
 		testRemoveStartingAtBack();
 		testSort();
 		

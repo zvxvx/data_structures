@@ -128,8 +128,23 @@ public class CDoublyLinkedList {
 		if (other == null) {
 			throw new NullPointerException();
 		}
-		boolean removed = false;
-	    return removed;
+		boolean toRemove = false;
+		for (Node cur = this.head.next; cur != this.head; cur = cur.next) {
+			for (Node otherCur = other.head.next; otherCur!= other.head; otherCur = otherCur.next) {
+				if (!Objects.equals(cur.data, otherCur.data)) {
+					toRemove = true;
+				} else {
+					toRemove = false;
+					break;
+				}
+			}
+			if (toRemove) {
+				cur.prev.next = cur.next;
+				cur.next.prev = cur.prev;
+				this.size--;
+			}
+		}
+	    return toRemove;
 	}
 	
 

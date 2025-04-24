@@ -59,7 +59,9 @@ public class Tester {
     // If n == 0, throw an IllegalArgumentException object.
     // Write this method below using recursion.
     public int div(int m, int n) throws IllegalArgumentException {
-        return -1; //change this line of code as needed.
+        if (n == 0) throw new IllegalArgumentException();
+        if (m < n) return 0;
+        return 1 + div(m - n, n); //change this line of code as needed.
     }
 
     //Check whether the sum of array arr is 24 or not.
@@ -74,9 +76,12 @@ public class Tester {
     // The method checks whether the sum of all elements in arr
     //       equals to the targetSum or not.
     // Hint:the subproblem is about a subarray.
-    private boolean isSum24(int arr[], int targetSum) {
-
-        return false; //change this line of code as needed.
+    private boolean isSum24(int[] arr, int targetSum) {
+        if (targetSum == 0) return true;
+        if (arr.length == 0 || targetSum < 0) return false;
+        int[] newArr = new int[arr.length - 1];
+        System.arraycopy(arr, 1, newArr, 0, arr.length - 1);
+        return isSum24(newArr, targetSum - arr[0]);
     }
 
     //You are NOT allowed to change the provided code in the *public*

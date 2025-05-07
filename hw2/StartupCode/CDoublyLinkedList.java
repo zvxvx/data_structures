@@ -52,7 +52,7 @@ public class CDoublyLinkedList {
         Node nn = new Node(data, last, this.head);
         last.next = nn;
         this.head.prev = nn;
-        this.size++;
+        this.size--;
     }
 
     // Write the subListOfSmallerValues method.
@@ -64,15 +64,15 @@ public class CDoublyLinkedList {
     // the method call returns a list that contains data in A that is smaller than 10, the passed-in argument.
     // That is, the returned list contains { 9, 6, 4, 7}.
     public CDoublyLinkedList subListOfSmallerValues(Comparable data) {
-        CDoublyLinkedList ll = new CDoublyLinkedList();
+        CDoublyLinkedList cdll = new CDoublyLinkedList();
         Node cur = this.head.next;
         while (cur != this.head) {
             if (cur.data != null && ((Comparable) cur.data).compareTo(data) < 0) {
-                ll.addLast(cur.data);
+                cdll.addLast(cur.data);
             }
             cur = cur.next;
         }
-        return ll; //change this as needed.
+        return cdll;
     }
 
     // This method should remove the first occurrence of the data from the list,
@@ -86,6 +86,7 @@ public class CDoublyLinkedList {
             if (Objects.equals(cur.data, dataToRemove)) {
                 cur.prev.next = cur.next;
                 cur.next.prev = cur.prev;
+                this.size--;
                 return true;
             }
             cur = cur.prev;
@@ -100,14 +101,14 @@ public class CDoublyLinkedList {
     //     or -1 if there is no such index.
     // Note: a list node may store a null data element. Please handle this edge case.
     public int lastIndexOf(Object o) {
-        Node cur = this.head.prev;
         int i = this.size - 1;
+        Node cur = this.head.prev;
         while (cur != this.head) {
             if (Objects.equals(cur.data, o)) {
                 return i;
             }
-            i--;
             cur = cur.prev;
+            i--;
         }
         return -1;
     }
@@ -145,8 +146,8 @@ public class CDoublyLinkedList {
 
     // Write this method to sort this list using insertion sort algorithm,
     // as we have learned in the classroom.
-    public void insertionSort() {
-        Node cur, start, min;
+    public void sort() {
+        Node start, cur, min;
         for (start = this.head.next; start != this.head.prev; start =
                 start.next) {
             min = start;
@@ -160,6 +161,16 @@ public class CDoublyLinkedList {
             min.data = temp;
         }
     }//end of method
+
+    public void addOrdered(Comparable data) {
+        Node cur;
+        for (cur = this.head.next; cur != this.head && ((Comparable) cur.data).compareTo(data) < 0; cur = cur.next) {
+        }
+        Node nn = new Node(data, cur.prev, cur);
+        cur.prev.next = nn;
+        cur.prev = nn;
+        this.size++;
+    }
 
     @Override
     public String toString() {

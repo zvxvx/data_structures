@@ -127,7 +127,7 @@ public class Tester {
     public static void testSort() {
         init();
         System.out.println("---------test insertionSort()---------");
-        list3.sort();
+        list3.insertionSort();
         System.out.println(list3); //none
         list3.addFirst("D");
         System.out.println(list3); //D
@@ -135,7 +135,7 @@ public class Tester {
         list3.addFirst("E");
         list3.addFirst("G");
         list3.addFirst("E");
-        list3.sort();
+        list3.insertionSort();
         System.out.println(list3); //DEEFG
         drawLine();
     }

@@ -55,6 +55,15 @@ public class CDoublyLinkedList {
         this.size--;
     }
 
+    public void removeLast() throws Exception {
+        if (this.size == 0) throw new Exception("Cannot remove from empty " +
+                "list");
+        Node last = this.head.prev;
+        last.prev.next = this.head;
+        this.head.prev = last.prev;
+        this.size--;
+    }
+
     // Write the subListOfSmallerValues method.
     // It should return a CDoublyLinkedList object
     //     containing data that is smaller than the value passed to the method.
@@ -64,15 +73,15 @@ public class CDoublyLinkedList {
     // the method call returns a list that contains data in A that is smaller than 10, the passed-in argument.
     // That is, the returned list contains { 9, 6, 4, 7}.
     public CDoublyLinkedList subListOfSmallerValues(Comparable data) {
-        CDoublyLinkedList cdll = new CDoublyLinkedList();
+        CDoublyLinkedList list = new CDoublyLinkedList();
         Node cur = this.head.next;
         while (cur != this.head) {
             if (cur.data != null && ((Comparable) cur.data).compareTo(data) < 0) {
-                cdll.addLast(cur.data);
+                list.addLast(cur.data);
             }
             cur = cur.next;
         }
-        return cdll;
+        return list;
     }
 
     // This method should remove the first occurrence of the data from the list,
@@ -150,18 +159,18 @@ public class CDoublyLinkedList {
     public void insertionSort() {
         Node lastSorted, sortedWalker;
         Comparable firstUnsortedData;
-        for(lastSorted=this.head.next; lastSorted != this.head.prev; lastSorted = lastSorted.next ) {
-            firstUnsortedData = (Comparable)lastSorted.next.data;
-            for(sortedWalker=lastSorted; sortedWalker != head &&
-                    ((Comparable)sortedWalker.data).compareTo(firstUnsortedData) > 0;
-                sortedWalker = sortedWalker.prev) {
-                sortedWalker.next.data = sortedWalker.data
+        for (lastSorted = this.head.next; lastSorted != this.head.prev; lastSorted = lastSorted.next) {
+            firstUnsortedData = (Comparable) lastSorted.next.data;
+            for (sortedWalker = lastSorted; sortedWalker != head &&
+                    ((Comparable) sortedWalker.data).compareTo(firstUnsortedData) > 0;
+                 sortedWalker = sortedWalker.prev) {
+                sortedWalker.next.data = sortedWalker.data;
             }
-            sortedWalker.next.data = firstUnsortedData
+            sortedWalker.next.data = firstUnsortedData;
         }
     }
 
-    public void sort() {
+    public void selectionSort() {
         Node start, cur, min;
         for (start = this.head.next; start != this.head.prev; start =
                 start.next) {
@@ -185,6 +194,16 @@ public class CDoublyLinkedList {
         cur.prev.next = nn;
         cur.prev = nn;
         this.size++;
+    }
+
+    public void sort() {
+        CDoublyLinkedList list = new CDoublyLinkedList();
+        Node cur;
+        for (cur = this.head.next; cur != this.head; cur = cur.next) {
+            list.addOrdered((Comparable) cur.data);
+        }
+        this.head = list.head;
+        this.size = list.size;
     }
 
     @Override

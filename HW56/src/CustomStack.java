@@ -34,12 +34,4 @@ public class CustomStack {
         }
         return stack[size - 1];
     }
-
-
-    public void display() {
-        for (int i = 0; i < size; i++) {
-            System.out.print(stack[i] + " ");
-        }
-        System.out.println();
-    }
 }

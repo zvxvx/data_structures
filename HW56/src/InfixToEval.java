@@ -7,7 +7,9 @@ public class InfixToEval {
         Scanner kb = new Scanner(System.in);
         System.out.print("Please enter the infix expression to process: ");
         String input = kb.next();
-
+        kb.close();
+        System.out.println("------------------");
+        System.out.println("Infix expression to evaluate: " + input);
         StringBuilder postfix = new StringBuilder();
 
         CustomStack stack = new CustomStack(input.length());
@@ -43,7 +45,10 @@ public class InfixToEval {
                 }
                 stack.pop();
             } else {
-                while (stack.getSize() != 0 && onStack.get(stack.peek()) > curItem.get(input.charAt(i))) {
+                while (
+                    stack.getSize() != 0 &&
+                    onStack.get(stack.peek()) > curItem.get(input.charAt(i))
+                ) {
                     Object operator = stack.pop();
                     postfix.append(operator);
                 }
@@ -57,8 +62,10 @@ public class InfixToEval {
         return postfix.toString();
     }
 
-    public void postFixToEval(String input) throws Exception{
-        System.out.println("The postfix expression for the input infix is: " + input);
+    public void postFixToEval(String input) throws Exception {
+        System.out.println(
+            "The postfix expression for the input infix is: " + input
+        );
         CustomStack stack = new CustomStack(input.length());
         for (int i = 0; i < input.length(); i++) {
             if (Character.isDigit(input.charAt(i))) {
@@ -66,9 +73,9 @@ public class InfixToEval {
                 stack.push(num);
             } else {
                 char operator = input.charAt(i);
-                int right = (int)stack.pop();
-                int left = (int)stack.pop();
-                switch(operator) {
+                int right = (int) stack.pop();
+                int left = (int) stack.pop();
+                switch (operator) {
                     case '+':
                         stack.push(left + right);
                         break;
@@ -82,12 +89,16 @@ public class InfixToEval {
                         stack.push(left / right);
                         break;
                     case '^':
-                        stack.push((int)Math.pow(left,right));
+                        stack.push((int) Math.pow(left, right));
                 }
             }
         }
         if (stack.getSize() == 1) {
-            System.out.println("The final result after evaluating the postfix is: " + (int)stack.pop());
+            System.out.println(
+                "The final result after evaluating the postfix is: " +
+                (int) stack.pop()
+            );
+            System.out.println("------------------");
         } else {
             throw new Exception("Error with postfix input.");
         }

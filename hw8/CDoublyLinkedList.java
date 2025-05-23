@@ -68,10 +68,24 @@ public class CDoublyLinkedList {
 
     public void mergeSort() {
         Queue q = new Queue();
-        for (Node cur = this.head; cur != this.head; cur = cur.next) {
+        CDoublyLinkedList sub1 = new CDoublyLinkedList();
+        CDoublyLinkedList sub2 = new CDoublyLinkedList();
+        for (Node cur = this.head.next; cur != this.head; cur = cur.next) {
             LinkedList tempList = new LinkedList();
             tempList.addFirst(cur.data);
             q.enq(tempList);
+        }
+        while (!q.isEmpty()) {
+            LinkedList tempList = new LinkedList();
+            LinkedList comp1 = q.deq();
+            LinkedList comp2 = q.deq();
+            if (((Comparable) comp1.getFirst()).compareTo(comp2.getFirst()) < 1) {
+                sub1.addLast(comp1);
+                sub2.addLast(comp2);
+            } else {
+                sub1.addLast(comp2);
+                sub2.addLast(comp1);
+            }
         }
     }
 
